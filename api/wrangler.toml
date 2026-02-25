@@ -1,0 +1,13 @@
+name = "portfolio-api"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+
+[build]
+command = "npm run build"
+
+# ローカル開発時の設定
+[vars]
+# 環境変数はここに追加するか、.dev.varsファイルを使用
+
+# 本番環境の設定
+# Cloudflare Dashboardまたは `wrangler secret put <KEY>` で設定
