@@ -13,6 +13,6 @@ services:
     build: ./api
     container_name: portfolio-api
     volumes:
-      - ./api:/app
+      - ./api:/api
     ports:
       - "3000:3000"
