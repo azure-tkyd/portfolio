@@ -1,10 +1,14 @@
-FROM node:24-alpine
+FROM node:22-slim
 
-WORKDIR /api
+WORKDIR /app
 
-COPY . .
+COPY package.json package-lock.json ./
+RUN npm ci
 
-RUN npm install
+RUN chown -R node:node /app
+USER node
+
+COPY --chown=node:node . .
 
 EXPOSE 3000
 

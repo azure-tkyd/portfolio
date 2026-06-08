@@ -1,18 +1,20 @@
 services:
-  portfolio-app:
+  app:
     build: ./app
     container_name: portfolio-app
     volumes:
       - ./app:/app
+      - /app/node_modules
     ports:
       - "5173:5173"
     depends_on:
-      - portfolio-api
+      - api
 
-  portfolio-api:
+  api:
     build: ./api
     container_name: portfolio-api
     volumes:
-      - ./api:/api
+      - ./api:/app
+      - /app/node_modules
     ports:
       - "3000:3000"

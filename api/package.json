@@ -1,26 +1,23 @@
 {
-  "name": "api",
+  "name": "portfolio-api",
   "type": "module",
   "scripts": {
-    "dev": "wrangler dev",
-    "dev:node": "tsx watch src/index.ts",
-    "build": "tsc",
-    "start": "node dist/index.js",
-    "deploy": "wrangler deploy"
+    "dev": "wrangler dev --port 3000 --ip 0.0.0.0",
+    "typecheck": "tsc --noEmit",
+    "deploy": "tsc --noEmit && wrangler deploy",
+    "cf-typegen": "wrangler types",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate:local": "wrangler d1 migrations apply portfolio --local",
+    "db:migrate:remote": "wrangler d1 migrations apply portfolio --remote"
   },
   "dependencies": {
-    "@hono/node-server": "^1.19.9",
-    "@hono/zod-validator": "^0.7.6",
-    "dotenv": "^17.3.1",
-    "drizzle-orm": "^0.45.1",
-    "hono": "^4.11.9",
-    "zod": "^4.3.6"
+    "drizzle-orm": "^0.45.2",
+    "hono": "^4.12.8"
   },
   "devDependencies": {
-    "@types/node": "^20.11.17",
-    "drizzle-kit": "^0.31.9",
-    "tsx": "^4.21.0",
+    "drizzle-kit": "^0.31.10",
+    "tsx": "^4.7.1",
     "typescript": "^5.8.3",
-    "wrangler": "^4.68.0"
+    "wrangler": "^4.16.0"
   }
 }
