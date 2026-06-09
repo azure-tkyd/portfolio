@@ -10,8 +10,16 @@ type Env = {
 
 const app = new Hono<{ Bindings: Env }>()
 
+// 許可する origin: ローカル開発 + Cloudflare Pages 本番/プレビュー
+const corsOrigin = (origin: string) => {
+  if (origin === 'http://localhost:5173') return origin
+  if (origin === 'https://portfolio-app.pages.dev') return origin
+  if (origin.endsWith('.portfolio-app.pages.dev')) return origin // プレビューデプロイ
+  return undefined
+}
+
 app.use('*', cors({
-  origin: ['http://localhost:5173'],
+  origin: corsOrigin,
 }))
 
 // 一覧: content を除外して返す
