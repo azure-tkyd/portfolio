@@ -6,20 +6,21 @@ import { posts } from './db/schema/posts'
 
 type Env = {
   DB: D1Database
+  // CORS 許可 origin（カンマ区切り）。本番は GitHub Variables→wrangler --var、ローカルは .dev.vars で注入
+  ALLOWED_ORIGINS?: string
 }
 
 const app = new Hono<{ Bindings: Env }>()
 
-// 許可する origin: ローカル開発 + Cloudflare Pages 本番/プレビュー
-const corsOrigin = (origin: string) => {
-  if (origin === 'http://localhost:5173') return origin
-  if (origin === 'https://portfolio-app.pages.dev') return origin
-  if (origin.endsWith('.portfolio-app.pages.dev')) return origin // プレビューデプロイ
-  return undefined
-}
-
+// 許可 origin は環境変数 ALLOWED_ORIGINS（カンマ区切り）で外部から注入する
 app.use('*', cors({
-  origin: corsOrigin,
+  origin: (origin, c) => {
+    const allowed = ((c.env as Env).ALLOWED_ORIGINS ?? '')
+      .split(',')
+      .map((s) => s.trim())
+      .filter(Boolean)
+    return allowed.includes(origin) ? origin : undefined
+  },
 }))
 
 // 一覧: content を除外して返す

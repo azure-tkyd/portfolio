@@ -7,3 +7,6 @@ binding = "DB"
 database_name = "portfolio"
 database_id = "cb87e5e6-8db1-4e51-9f84-a38a59494162"
 migrations_dir = "drizzle/migrations"
+
+[vars]
+ALLOWED_ORIGINS = "http://localhost:5173,https://portfolio-app-328.pages.dev"
